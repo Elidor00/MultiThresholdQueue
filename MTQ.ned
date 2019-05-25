@@ -36,7 +36,7 @@ network MTQ
         energyQueueQ2: PassiveQueue {
             @display("p=233,148");
         }
-        server: Server {
+        serverExt: ServerExt {
             @display("p=372,109");
         }
         sink: Sink {
@@ -47,8 +47,8 @@ network MTQ
         }
     connections:
         sourceEExtended.out --> energyQueueQ2.in++;
-        customerQueueQ1.out++ --> server.in++;
-        energyQueueQ2.out++ --> server.in++;
-        server.out --> sink.in++;
         sourceCExtended.out --> customerQueueQ1.in++;
+        customerQueueQ1.out++ --> serverExt.in++;
+        energyQueueQ2.out++ --> serverExt.in++;
+        serverExt.out --> sink.in++;
 }
