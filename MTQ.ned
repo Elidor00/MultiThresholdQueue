@@ -14,10 +14,14 @@
 // 
 package mtq;
 
+import org.omnetpp.queueing.Allocate;
+import org.omnetpp.queueing.Deallocate;
 import org.omnetpp.queueing.PassiveQueue;
+import org.omnetpp.queueing.ResourcePool;
 import org.omnetpp.queueing.Server;
 import org.omnetpp.queueing.Sink;
 import org.omnetpp.queueing.Source;
+import org.omnetpp.queueing.SourceOnce;
 
 
 //
@@ -33,22 +37,22 @@ network MTQ
         customerQueueQ1: CustomerQueueQ1 {
             @display("p=233,53");
         }
-        energyQueueQ2: PassiveQueue {
-            @display("p=233,148");
-        }
-        serverExt: ServerExt {
-            @display("p=372,109");
-        }
         sink: Sink {
             @display("p=514,109");
         }
         sourceCExtended: SourceCExtended {
             @display("p=73,53");
         }
+        serverExt: ServerExt {
+            @display("p=387,109");
+        }
+        energyQueueQ2: EnergyQueueQ2 {
+            @display("p=233,148");
+        }
     connections:
-        sourceEExtended.out --> energyQueueQ2.in++;
         sourceCExtended.out --> customerQueueQ1.in++;
-        customerQueueQ1.out++ --> serverExt.in++;
-        energyQueueQ2.out++ --> serverExt.in++;
+        sourceEExtended.out --> energyQueueQ2.in++;
+        energyQueueQ2.out++ --> serverExt.inEnergy;
+        customerQueueQ1.out++ --> serverExt.inCustomer;
         serverExt.out --> sink.in++;
 }

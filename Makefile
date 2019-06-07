@@ -34,6 +34,7 @@ OBJS = \
     $O/CustomerJob.o \
     $O/CustomerQueueQ1.o \
     $O/EnergyJob.o \
+    $O/EnergyQueueQ2.o \
     $O/ServerExt.o \
     $O/SourceCExtended.o \
     $O/SourceEExtended.o

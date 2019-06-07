@@ -14,17 +14,15 @@
 // 
 
 package mtq;
-import org.omnetpp.queueing.Server;
+import org.omnetpp.queueing.PassiveQueue;
 
 //
 // TODO auto-generated type
 //
-simple ServerExt extends Server
+simple EnergyQueueQ2 extends PassiveQueue
 {
-    parameters:
-	    @class(ServerExt);
+	parameters:
+	    @class(EnergyQueueQ2);
 	    
-	gates:
-        input inEnergy;
-        input inCustomer;
+
 }
