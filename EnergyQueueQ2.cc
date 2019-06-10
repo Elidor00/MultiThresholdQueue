@@ -35,7 +35,7 @@ void EnergyQueueQ2::initialize()
 
 void EnergyQueueQ2::handleMessage(cMessage *msg)
 {
-    Job *job = check_and_cast<Job *>(msg);
+    EnergyJob *job = check_and_cast<EnergyJob *>(msg);
         job->setTimestamp();
 
         // check for container capacity
@@ -47,14 +47,14 @@ void EnergyQueueQ2::handleMessage(cMessage *msg)
             delete msg;
             return;
         }
-
-       if (!check_and_cast<ServerExt *>(this->gate("out",0)->getNextGate()->getOwnerModule())->needEnergy()){
+       if (energyRequested <= 0){
             queue.insert(job);
             emit(queueLengthSignal, length());
             job->setQueueCount(job->getQueueCount() + 1);
         }
         else if (length() == 0) {
             // send through without queueing
+            energyRequested -= job->getEnergyForPacket();
             sendJob(job,0);
         }
         else
@@ -81,7 +81,7 @@ void EnergyQueueQ2::request(int gateIndex, int amount)
     ASSERT(!queue.isEmpty());
     EnergyJob *job;
 
-    while(energyRequested>0  && !queue.isEmpty()){
+    while(energyRequested > 0  && !queue.isEmpty()){
 
         job = (EnergyJob *)queue.pop();
 

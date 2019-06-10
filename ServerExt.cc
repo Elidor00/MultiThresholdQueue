@@ -27,7 +27,6 @@ Define_Module(ServerExt);
 
 ServerExt::ServerExt() {
     // TODO Auto-generated constructor stub
-    needEn = false;
 }
 
 ServerExt::~ServerExt() {
@@ -37,6 +36,7 @@ ServerExt::~ServerExt() {
 void ServerExt::initialize()
 {
     Server::initialize();
+    energyNecessary=0;
 }
 
 int ServerExt::numInitStages()
@@ -71,30 +71,28 @@ void ServerExt::handleMessage(cMessage *msg)
         else {
             std::string type=msg->getClassName();
             if( type  == "mtq::EnergyJob") {
+               jobServiced = check_and_cast<Job *>(msg);
 
-                   return;
+                energyNecessary-= ((EnergyJob*)jobServiced)->getEnergyForPacket();
+                if(energyNecessary<=0){
+                    simtime_t serviceTime = par("serviceTime");
+                    scheduleAt(simTime()+serviceTime, endServiceMsg);
+                    emit(busySignal, true);
+                }
+                return;
+            }else if (type  == "mtq::CustomerJob"){
+                if (!allocated)
+                    error("job arrived, but the sender did not call allocate() previously");
+                if (jobServiced)
+                    throw cRuntimeError("a new job arrived while already servicing one");
+
+                mtq::CustomerJob *cj = check_and_cast<mtq::CustomerJob *>(msg);
+                energyNecessary=cj->getEnergy();
+                cGate *gate = this->gate("inEnergy");
+                check_and_cast<EnergyQueueQ2 *>(gate->getPreviousGate()->getOwnerModule())->request(gate->getIndex(),cj->getEnergy());
             }
-            if (!allocated)
-                error("job arrived, but the sender did not call allocate() previously");
-            if (jobServiced)
-                throw cRuntimeError("a new job arrived while already servicing one");
 
-            mtq::CustomerJob *cj = check_and_cast<mtq::CustomerJob *>(msg);
-            cj->getEnergy();
-            cGate *gate = this->gate("inEnergy");
-            check_and_cast<EnergyQueueQ2 *>(gate->getPreviousGate()->getOwnerModule())->request(gate->getIndex(),cj->getEnergy());
-
-            jobServiced = check_and_cast<Job *>(msg);
-            simtime_t serviceTime = par("serviceTime");
-            scheduleAt(simTime()+serviceTime, endServiceMsg);
-            emit(busySignal, true);
         }
-}
-
-bool ServerExt::needEnergy()
-{
-    EV << "need energy?" << needEn << endl;
-    return needEn;
 }
 
 void ServerExt::refreshDisplay()

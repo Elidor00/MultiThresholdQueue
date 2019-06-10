@@ -32,10 +32,17 @@ void SourceCExtended::handleMessage(cMessage *msg)
 CustomerJob *SourceCExtended::createJob()
 {
     char buf[80];
+    int energy = 1;
+    int efp=0;
+    int npackets = (int)par("numberOfPacket").doubleValue();
+    for (int i=0; i<npackets; i++){
+        efp=par("energyForPacket").intValue();
+        energy *= efp;
+    }
     sprintf(buf, "%.60s-%d", jobName.c_str(), ++jobCounter);
-    EV << "Energia richiesta:" << par("needEnergy").doubleValue();
+    EV << "Energia richiesta: " << energy;
     CustomerJob *job = new CustomerJob(buf);
-    job -> setEnergy(par("needEnergy"));
+    job -> setEnergy(energy);
     return (CustomerJob*) job;
 }
 

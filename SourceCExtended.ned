@@ -23,7 +23,9 @@ simple SourceCExtended extends Source
 {
     parameters:
     	@class(SourceCExtended);
-    	@signal[needEnergy](type = "double");
-        @statistic[needEnergy](title = "energy needed for a generic job");
-        volatile double needEnergy @unit();
+    	@signal[energyForPacket](type = "int");
+    	volatile int energyForPacket @unit();
+    	
+    	@signal[numberOfPacket](type = "double");
+        volatile double numberOfPacket @unit();
 }

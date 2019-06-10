@@ -28,7 +28,7 @@ namespace mtq {
 class ServerExt : public Server
 {
     private:
-        bool needEn; //needEnergy variable
+        int energyNecessary;
     protected:
        virtual void initialize() override;
        virtual int numInitStages();
@@ -36,7 +36,6 @@ class ServerExt : public Server
        virtual void refreshDisplay();
        virtual void finish() override;
     public:
-        bool needEnergy();
         ServerExt();
         virtual ~ServerExt();
 

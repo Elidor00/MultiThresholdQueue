@@ -55,9 +55,9 @@ void CustomerQueueQ1::request(int gateIndex)
 
     ASSERT(!queue.isEmpty());
 
-    CustomerJob* tmp_min =((CustomerJob *) queue.get(0));
+    CustomerJob* tmp_min = ((CustomerJob *) queue.get(0));
     for (int i=1; i < queue.length(); i++){
-        if (  ((CustomerJob *) queue.get(i))->getEnergy()  < tmp_min->getEnergy() ) {
+        if (((CustomerJob *) queue.get(i))->getEnergy()  < tmp_min->getEnergy()) {
             tmp_min = ((CustomerJob *) queue.get(i));
         }
 
