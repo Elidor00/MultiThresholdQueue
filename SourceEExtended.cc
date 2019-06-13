@@ -50,7 +50,9 @@ EnergyJob *SourceEExtended::createJob()
     char buf[80];
     sprintf(buf, "%.60s-%d", jobName.c_str(), ++jobCounter);
     EnergyJob *job = new EnergyJob(buf);
-    job -> setEnergyForPacket(par("energyForPacket"));
+    int tmp = par("energyForPacket");
+    job -> setEnergyForPacket(tmp);
+    //EV << "energyForPacketENERGY: " << tmp << endl;
     return (EnergyJob*) job;
 }
 

@@ -12,7 +12,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
-#include<iostream>
+#include <iostream>
 #include "ServerExt.h"
 #include "Job.h"
 #include "SelectionStrategies.h"
@@ -62,7 +62,6 @@ void ServerExt::handleMessage(cMessage *msg)
 
             cGate *gate = this->gate("inCustomer");//   selectionStrategy->selectableGate(k);
 
-            //queueing::PassiveQueue Q = check_and_cast<queueing::PassiveQueue *>(gate->getPreviousGate()->getOwnerModule());
             if (check_and_cast<queueing::PassiveQueue *>(gate->getPreviousGate()->getOwnerModule())->length() > 0) {
                 check_and_cast<queueing::PassiveQueue *>(gate->getPreviousGate()->getOwnerModule())->request(gate->getIndex());
             }

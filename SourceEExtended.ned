@@ -25,10 +25,10 @@ simple SourceEExtended extends Source
     	@class(SourceEExtended);
     	
     	@signal[nEnergyPacket](type="double");
-    	@statistic[nEnergyPacket](title = "number of a energy packets");
+    	//@statistic[nEnergyPacket](title = "number of a energy packets");
     	volatile double nEnergyPacket @unit();
     	
     	@signal[energyForPacket](type="int");
-    	@statistic[energyForPacket](title = "amount of energy for a single packet");
+    	//@statistic[energyForPacket](title = "amount of energy for a single packet");
     	volatile int energyForPacket @unit();
 }
