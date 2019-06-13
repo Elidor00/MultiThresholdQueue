@@ -40,7 +40,7 @@ class EnergyQueueQ2 : public PassiveQueue
         virtual void refreshDisplay();
     public:
         EnergyQueueQ2();
-        virtual ~EnergyQueueQ2();
+        ~EnergyQueueQ2();
         // The following methods are called from IServer:
         virtual int length() override;
         virtual void request(int gateIndex, int amount);

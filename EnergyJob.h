@@ -31,7 +31,7 @@ public:
     void setEnergyForPacket(int energyForPacket);
     int getEnergyForPacket();
     EnergyJob(const char *name=nullptr, int kind=0, JobList *table=nullptr);
-    virtual ~EnergyJob();
+    ~EnergyJob();
 };
 
 } /* namespace mtq */

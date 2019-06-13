@@ -21,7 +21,7 @@ CustomerJob::CustomerJob(const char *name, int kind, JobList *table) : Job(name,
 
 }
 
-CustomerJob::CustomerJob() {
+CustomerJob::CustomerJob() : Job() {
     // TODO Auto-generated constructor stub
 }
 

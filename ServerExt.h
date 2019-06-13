@@ -37,7 +37,7 @@ class ServerExt : public Server
        virtual void finish() override;
     public:
         ServerExt();
-        virtual ~ServerExt();
+        ~ServerExt();
 
 };
 

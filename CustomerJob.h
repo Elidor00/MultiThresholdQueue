@@ -32,7 +32,7 @@ public:
     int getEnergy();
     CustomerJob();
     CustomerJob(const char *name=nullptr, int kind=0, JobList *table=nullptr);
-    virtual ~CustomerJob ();
+    ~CustomerJob ();
 };
 
 } /* namespace mtq */

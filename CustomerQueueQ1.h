@@ -35,7 +35,7 @@ class CustomerQueueQ1 : public PassiveQueue
         virtual void refreshDisplay();
     public:
         CustomerQueueQ1();
-        virtual ~CustomerQueueQ1();
+        ~CustomerQueueQ1();
         // The following methods are called from IServer:
         virtual int length() override;
         virtual void request(int gateIndex) override;

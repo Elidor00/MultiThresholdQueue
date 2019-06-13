@@ -25,7 +25,7 @@ using namespace mtq;
 
 Define_Module(ServerExt);
 
-ServerExt::ServerExt() {
+ServerExt::ServerExt() : Server() {
     // TODO Auto-generated constructor stub
 }
 
@@ -70,9 +70,9 @@ void ServerExt::handleMessage(cMessage *msg)
         else {
             std::string type=msg->getClassName();
             if( type  == "mtq::EnergyJob") {
-               jobServiced = check_and_cast<Job *>(msg);
-
-                energyNecessary-= ((EnergyJob*)jobServiced)->getEnergyForPacket();
+                Job* jobE = check_and_cast<Job *>(msg);
+                energyNecessary-= ((EnergyJob*)jobE)->getEnergyForPacket();
+                send(jobE, "out");
                 if(energyNecessary<=0){
                     simtime_t serviceTime = par("serviceTime");
                     scheduleAt(simTime()+serviceTime, endServiceMsg);
@@ -86,6 +86,7 @@ void ServerExt::handleMessage(cMessage *msg)
                     throw cRuntimeError("a new job arrived while already servicing one");
 
                 mtq::CustomerJob *cj = check_and_cast<mtq::CustomerJob *>(msg);
+                jobServiced = cj;
                 energyNecessary=cj->getEnergy();
                 cGate *gate = this->gate("inEnergy");
                 check_and_cast<EnergyQueueQ2 *>(gate->getPreviousGate()->getOwnerModule())->request(gate->getIndex(),cj->getEnergy());
