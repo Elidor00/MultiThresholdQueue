@@ -27,4 +27,6 @@ simple ServerExt extends Server
 	gates:
         input inEnergy;
         input inCustomer;
+        output outE;
+        output outC;
 }

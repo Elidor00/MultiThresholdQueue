@@ -29,7 +29,7 @@ import org.omnetpp.queueing.SourceOnce;
 //
 network MTQ
 {
-    @display("bgb=629,247");
+    @display("bgb=574,215");
     submodules:
         sourceEExtended: SourceEExtended {
             @display("p=73,148");
@@ -37,8 +37,8 @@ network MTQ
         customerQueueQ1: CustomerQueueQ1 {
             @display("p=233,53");
         }
-        sink: Sink {
-            @display("p=514,109");
+        sinkE: Sink {
+            @display("p=508,159");
         }
         sourceCExtended: SourceCExtended {
             @display("p=73,53");
@@ -49,10 +49,14 @@ network MTQ
         energyQueueQ2: EnergyQueueQ2 {
             @display("p=233,148");
         }
+        sinkC: Sink {
+            @display("p=508,53");
+        }
     connections:
         sourceCExtended.out --> customerQueueQ1.in++;
         sourceEExtended.out --> energyQueueQ2.in++;
         energyQueueQ2.out++ --> serverExt.inEnergy;
         customerQueueQ1.out++ --> serverExt.inCustomer;
-        serverExt.out --> sink.in++;
+        serverExt.outE --> sinkE.in++;
+        serverExt.outC --> sinkC.in++;
 }

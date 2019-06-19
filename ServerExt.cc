@@ -51,7 +51,7 @@ void ServerExt::handleMessage(cMessage *msg)
             ASSERT(allocated);
             simtime_t d = simTime() - endServiceMsg->getSendingTime();
             jobServiced->setTotalServiceTime(jobServiced->getTotalServiceTime() + d);
-            send(jobServiced, "out");
+            send(jobServiced, "outC");
             jobServiced = nullptr;
             allocated = false;
             emit(busySignal, false);
@@ -72,7 +72,7 @@ void ServerExt::handleMessage(cMessage *msg)
             if( type  == "mtq::EnergyJob") {
                 Job* jobE = check_and_cast<Job *>(msg);
                 energyNecessary-= ((EnergyJob*)jobE)->getEnergyForPacket();
-                send(jobE, "out");
+                send(jobE, "outE");
                 if(energyNecessary<=0){
                     simtime_t serviceTime = par("serviceTime");
                     scheduleAt(simTime()+serviceTime, endServiceMsg);
